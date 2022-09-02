@@ -1,6 +1,5 @@
 from json import loads
 from kafka import KafkaConsumer
-
 from database import collection
 
 consumer = KafkaConsumer(
@@ -8,7 +7,7 @@ consumer = KafkaConsumer(
     bootstrap_servers=['localhost : 9092'],
     auto_offset_reset='earliest',
     enable_auto_commit=True,
-    group_id='my-group',
+    group_id='group',
     value_deserializer=lambda x: loads(x.decode('utf-8'))
 )
 
@@ -17,3 +16,4 @@ for msg in consumer:
     print(msg, message)
     collection.insert_one(message)
     print(message, "added to", collection, sep=" ")
+
